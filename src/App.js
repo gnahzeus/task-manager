@@ -16,16 +16,29 @@ function App(props) {
     setTasks([...tasks, newTask]);
   }
   
+  function toggleTaskCompleted(id) {
+    const updatedTasks = tasks.map(task => {
+      // if this task has the same ID as the edited task
+      if (id === task.id) {
+        // use object spread to make a new object whose `completed` prop has been inverted
+        return {...task, completed: !task.completed}
+      }
+      return task;
+    });
+    setTasks(updatedTasks);
+  }
+
   const taskList = tasks.map(task => ( 
       <Task 
         id={task.id} 
         name={task.name} 
         completed={task.completed}
         key={task.id}
+        toggleTaskCompleted={toggleTaskCompleted}
       />));
 
-  const tasksNoun = taskList.length !== 1 ? 'tasks' : 'task';
-  const headingText = `${taskList.length} ${tasksNoun} remaining`;
+  const plurality = taskList.length !== 1 ? 'tasks' : 'task';
+  const headingText = `${taskList.length} ${plurality} remaining`;
     
   return (
     <div className="todoapp stack-large">
