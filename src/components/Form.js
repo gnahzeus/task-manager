@@ -5,9 +5,11 @@ function Form(props) {
   const [name, setName] = useState("");
 
   function handleSubmit(e) {
-    e.preventDefault();
-    props.addTask(name)
-    setName(""); // clear form aft submit
+    if (!(e.target.value === "")) {
+       e.preventDefault();
+        props.addTask(name)
+        setName(""); // clear form aft submit
+    }
   }
 
   function handleChange(e) {
