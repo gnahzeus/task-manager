@@ -6,6 +6,11 @@ import Form from "./components/Form";
 import FilterTag from "./components/FilterTag";
 
 function App(props) {
+  
+  function addTask(name) {
+    alert(name);
+  }
+  
   const taskList = props.tasks?.map(task => ( 
       <Task 
         id={task.id} 
@@ -17,7 +22,7 @@ function App(props) {
   return (
     <div className="todoapp stack-large">
       <h1>My Task Manager</h1>
-      <Form />
+      <Form addTask={addTask}/>
       <div className="filters btn-group stack-exception">
         <FilterTag />
         <FilterTag />
