@@ -16,6 +16,10 @@ function App(props) {
     setTasks([...tasks, newTask]);
   }
   
+  function deleteTask(id) {
+    console.log(id);
+  }
+
   function toggleTaskCompleted(id) {
     const updatedTasks = tasks.map(task => {
       // if this task has the same ID as the edited task
@@ -35,6 +39,7 @@ function App(props) {
         completed={task.completed}
         key={task.id}
         toggleTaskCompleted={toggleTaskCompleted}
+        deleteTask={deleteTask} // delete callback prop
       />));
 
   const plurality = taskList.length !== 1 ? 'tasks' : 'task';
@@ -43,7 +48,7 @@ function App(props) {
   return (
     <div className="todoapp stack-large">
       <h1>My Task Manager</h1>
-      <Form addTask={addTask}/>
+      <Form addTask={addTask}/> 
       <div className="filters btn-group stack-exception">
         <FilterTag />
         <FilterTag />
