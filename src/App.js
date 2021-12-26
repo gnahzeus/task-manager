@@ -21,10 +21,10 @@ function App(props) {
     setTasks(remaining); // input new array without deleted tasks
   }
 
-  function editTask(id) {
+  function editTask(id, editedName) {
     const editedTasks = tasks.map(task => {
       if (id === task.id) { // if the task has same id as edited task
-        return {...task, name: newName}
+        return {...task, name: editedName}
       }
       return task
     });
