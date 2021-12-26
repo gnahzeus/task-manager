@@ -17,7 +17,8 @@ function App(props) {
   }
   
   function deleteTask(id) {
-    console.log(id);
+    const remaining = tasks.filter(task => id !== task.id);
+    setTasks(remaining); // input new array without deleted tasks
   }
 
   function toggleTaskCompleted(id) {
