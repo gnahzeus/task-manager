@@ -52,7 +52,9 @@ function App(props) {
     setTasks(updatedTasks);
   }
 
-  const taskList = tasks.map(task => ( 
+  const taskList = tasks
+  .filter(FILTER[filter]) //render task only if it is in the correct tag
+  .map(task => ( 
       <Task 
         id={task.id} 
         name={task.name} 
