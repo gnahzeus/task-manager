@@ -26,6 +26,7 @@ export default function Task(props) {
           </div>
         </form>
       );
+
       const viewTemplate = (
         <div className="stack-small">
           <div className="c-cb">
@@ -54,6 +55,8 @@ export default function Task(props) {
         </div>
       );
       
+    return <li className="todo">
+        {isEditing ? editingTemplate : viewTemplate}</li>;
 
     return (
         <li className="todo stack-small">
