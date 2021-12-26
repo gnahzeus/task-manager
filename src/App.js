@@ -21,6 +21,16 @@ function App(props) {
     setTasks(remaining); // input new array without deleted tasks
   }
 
+  function editTask(id) {
+    const editedTasks = tasks.map(task => {
+      if (id === task.id) { // if the task has same id as edited task
+        return {...task, name: newName}
+      }
+      return task
+    });
+    setTasks(editedTasks);
+  }
+
   function toggleTaskCompleted(id) {
     const updatedTasks = tasks.map(task => {
       // if this task has the same ID as the edited task
@@ -41,6 +51,7 @@ function App(props) {
         key={task.id}
         toggleTaskCompleted={toggleTaskCompleted}
         deleteTask={deleteTask} // delete callback prop
+        editTask={editTask}
       />));
 
   const plurality = taskList.length !== 1 ? 'tasks' : 'task';
