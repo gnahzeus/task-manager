@@ -5,6 +5,7 @@ import Task from "./components/Task";
 import Form from "./components/Form";
 import FilterTag from "./components/FilterTag";
 import { nanoid } from "nanoid";
+import axios from "axios";
 
 const FILTER = {
   All: () => true, // all tasks
@@ -18,11 +19,42 @@ function App(props) {
   
   const [tasks, setTasks] = useState(props.tasks);
   const [filter, setFilter] = useState('All'); // hook that reads & sets filter: default: All
-
-
+/*
+newTask = (e) => {
+    if (e.key === "Enter" && !(e.target.value === "")) {
+      axios
+        .post("/api/version1/tasks", { task: { title: e.target.value } })
+        .then((res) => {
+          const tasks = update(this.state.tasks, {
+            $splice: [[0, 0, res.data]],
+          });
+  
+          this.setState({
+            tasks: tasks,
+            inputValue: "",
+          });
+        })
+        .catch((error) => console.log(error));
+    }
+  }; */
   function addTask(name) {
-    const newTask = { id: "todo-" + nanoid(), name: name, completed: false };
-    setTasks([...tasks, newTask]);
+    if (!(name.target.value === "")) {
+      axios
+      .post("/api/version1/tasks", { task: { title: name.target.value } })
+      .then((res) => {
+        const newTask = { id: "todo-" + nanoid(), name: name, completed: false };
+        /*const tasks = update(this.state.tasks, {
+          $splice: [[0, 0, res.data]],
+        });*/
+
+        /*this.setState({
+          tasks: tasks,
+          inputValue: "",
+        });*/
+        setTasks([...tasks, newTask]);
+      })
+      .catch((error) => console.log(error));
+    }
   }
   
   function deleteTask(id) {
