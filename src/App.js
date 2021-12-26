@@ -6,10 +6,19 @@ import Form from "./components/Form";
 import FilterTag from "./components/FilterTag";
 import { nanoid } from "nanoid";
 
+const FILTER = {
+  All: () => true, // all tasks
+  Active: task => !task.completed, // tasks whose completed prop is false
+  Completed: task => task.completed
+}
+
+const FILTER_TAGS = Object.keys(FILTER); // array of filter_tags
 
 function App(props) {
   
-  const [tasks, setTasks] = useState(props.tasks)
+  const [tasks, setTasks] = useState(props.tasks);
+  const [filter, setFilter] = useState('All'); // hook that reads & sets filter: default: All
+
 
   function addTask(name) {
     const newTask = { id: "todo-" + nanoid(), name: name, completed: false };
@@ -54,6 +63,10 @@ function App(props) {
         editTask={editTask}
       />));
 
+  const filterButtons = FILTER_TAGS.map(tag => 
+    (<FilterTag key={tag} name={tag} 
+      isPressed={tag === filter} setFilter={setFilter}/>));
+
   const plurality = taskList.length !== 1 ? 'tasks' : 'task';
   const headingText = `${taskList.length} ${plurality} remaining`;
     
@@ -62,9 +75,7 @@ function App(props) {
       <h1>My Task Manager</h1>
       <Form addTask={addTask}/> 
       <div className="filters btn-group stack-exception">
-        <FilterTag />
-        <FilterTag />
-        <FilterTag />
+        {filterButtons}
       </div>
       <h2 id="list-heading">
         {headingText}
