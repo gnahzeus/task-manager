@@ -4,15 +4,27 @@ import React, {useState } from "react";
 export default function Task(props) { 
     // isEditing state, default false
     const [isEditing, setEditing] = useState(false);  
-    
+    const [editedName, setEditedName] = useState('');
+
+    function handleChange(e) {
+        setEditedName(e.target.value);
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        props.editTask(props.id, editedName);
+        setEditedName("");
+        setEditing(false);
+      }          
 
     const editingTemplate = (
-        <form className="stack-small">
+        <form className="stack-small" onSubmit={handleSubmit}>
           <div className="form-group">
             <label className="todo-label" htmlFor={props.id}>
               New name for {props.name}
             </label>
-            <input id={props.id} className="todo-text" type="text" />
+            <input id={props.id} className="todo-text" type="text" 
+                value={editedName} onChange={handleChange}/>
           </div>
           <div className="btn-group">
             <button type="button" className="btn todo-cancel" onClick={() => setEditing(false)}>
