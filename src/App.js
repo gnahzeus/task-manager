@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component, useEffect, useState } from "react";
 import './App.css';
 import TasksContainer from "./components/TasksContainer";
 import Task from "./components/Task";
@@ -16,72 +16,128 @@ const FILTER = {
 const FILTER_TAGS = Object.keys(FILTER); // array of filter_tags
 
 function App(props) {
-  
   const [tasks, setTasks] = useState(props.tasks);
   const [filter, setFilter] = useState('All'); // hook that reads & sets filter: default: All
-/*
-newTask = (e) => {
-    if (e.key === "Enter" && !(e.target.value === "")) {
-      axios
-        .post("/api/version1/tasks", { task: { title: e.target.value } })
-        .then((res) => {
-          const tasks = update(this.state.tasks, {
-            $splice: [[0, 0, res.data]],
-          });
   
-          this.setState({
-            tasks: tasks,
-            inputValue: "",
-          });
-        })
-        .catch((error) => console.log(error));
-    }
-  }; */
+  useEffect(() => {
+    getAllTasks();
+  }, [])
+
+
+  const getAllTasks = () => {
+    axios.get("/api/version1/tasks")
+    .then((res) => {
+      console.log("RES.DATA ", res.data)
+      setTasks(res.data)
+    })
+    .catch(error => console.error(`Error: ${error}`));
+  }
+  
+  
+  /*
   function addTask(name) {
-    if (!(name.target.value === "")) {
-      axios
-      .post("/api/version1/tasks", { task: { title: name.target.value } })
+    fetch('/api/version1/tasks', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "task":{
+          "name": name,
+          "completed": false,
+        }
+      }),
+    })
+      .then((res) => res.json())
+      .then(data => {
+        const newTask = { id: "todo-" + nanoid(), name: name, completed: false };
+        console.log("data here", data);
+        setTasks([...tasks, newTask]); } )
+      .catch((error) => console.log('error'))
+  }
+  */
+  
+  function addTask(name) {
+    /*
+    if (!(name === "")) { //disallow empty tasks
+      const params = { id: "todo-" + nanoid(), name: name, completed: false }
+      axios.post("/api/version1/tasks", params, 
+      {headers: {'content-type': 'application/json',},})
       .then((res) => {
         const newTask = { id: "todo-" + nanoid(), name: name, completed: false };
-        /*const tasks = update(this.state.tasks, {
-          $splice: [[0, 0, res.data]],
-        });*/
-
-        /*this.setState({
-          tasks: tasks,
-          inputValue: "",
-        });*/
-        setTasks([...tasks, newTask]);
+        //console.log("res.data", res);
+        //console.log("tasks", tasks);
+        console.log("res.data here", res.data);
+        setTasks([...tasks, newTask]); 
+      })
+      .catch((error) => console.log(error));
+    }
+   */
+    if (!(name === "")) { //disallow empty tasks
+      axios.post("/api/version1/tasks", {name: name, completed: false})
+      .then((res) => {
+        const newTask = { id: "todo-" + nanoid(), name: name, completed: false };
+        setTasks([...tasks, newTask]); 
       })
       .catch((error) => console.log(error));
     }
   }
-  
+
   function deleteTask(id) {
-    const remaining = tasks.filter(task => id !== task.id);
-    setTasks(remaining); // input new array without deleted tasks
+    axios.delete(`/api/version1/tasks/${id}`)
+    .then(res => {
+      const remaining = tasks.filter(task => id !== task.id);
+      setTasks(remaining); // input new array without deleted tasks
+    })
+    .catch(error => console.log(error))
   }
+
+/*
+  modifyTask = (e, id) => {
+		axios.put(`/api/version1/tasks/${id}`, {task: {done: e.target.checked}})
+		.then(res => {
+		  const taskIndex = this.state.tasks.findIndex(x => x.id === res.data.id)
+		  const tasks = update(this.state.tasks, {
+			[taskIndex]: {$set: res.data}
+		  })
+		  this.setState({
+			tasks: tasks
+		  })
+		})
+		.catch(error => console.log(error))      
+	} . */
 
   function editTask(id, editedName) {
-    const editedTasks = tasks.map(task => {
-      if (id === task.id) { // if the task has same id as edited task
-        return {...task, name: editedName}
-      }
-      return task
-    });
-    setTasks(editedTasks);
+    axios.put(`/api/version1/tasks/${id}`, {name: editedName})
+		.then(res => {
+		  const editedTasks = tasks.map(task => {
+        if (id === task.id) { // if the task has same id as edited task
+          return {...task, name: editedName}
+        }
+        return task
+      });
+      setTasks(editedTasks);
+		})
+		.catch(error => console.log(error))   
+		  
   }
 
-  function toggleTaskCompleted(id) {
-    const updatedTasks = tasks.map(task => {
-      // if this task has the same ID as the edited task
-      if (id === task.id) {
-        // use object spread to make a new object whose `completed` prop has been inverted
-        return {...task, completed: !task.completed}
-      }
-      return task;
-    });
-    setTasks(updatedTasks);
+  function toggleTaskCompleted(id, completion) {
+      axios.put(`/api/version1/tasks/${id}`, {completed: !completion})
+      .then(res => {
+        const updatedTasks = tasks.map(task => {
+          // if this task has the same ID as the edited task
+          if (id === task.id) {
+            // use object spread to make a new object whose `completed` prop has been inverted
+            return {...task, completed: !task.completed}
+          }
+          console.log(res.data);
+          return task;
+        });
+        setTasks(updatedTasks);
+      })
+      .catch(error => console.log(error))   
   }
 
   const taskList = tasks

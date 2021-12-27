@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, {useState } from "react";
 
 
@@ -14,8 +15,10 @@ export default function Task(props) {
         e.preventDefault();
         props.editTask(props.id, editedName);
         setEditedName("");
-        setEditing(false);
-      }          
+        setEditing(false); 
+      
+    }
+         
 
     const editingTemplate = (
         <form className="stack-small" onSubmit={handleSubmit}>
@@ -46,7 +49,7 @@ export default function Task(props) {
                 id={props.id}
                 type="checkbox"
                 defaultChecked={props.completed}
-                onChange={() => props.toggleTaskCompleted(props.id)}
+                onChange={() => props.toggleTaskCompleted(props.id, props.completed)}
               />
               <label className="todo-label" htmlFor={props.id}>
                 {props.name}

@@ -2,12 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import axios from 'axios';
 
 
 const TASKS = [
-  { id: "task-0", name: "Eat", completed: true },
-  { id: "task-1", name: "Sleep", completed: false },
-  { id: "task-2", name: "Repeat", completed: false }
+  { id: "task-0", name: "", completed: true },
+  { id: "task-1", name: "", completed: false },
+  { id: "task-2", name: "", completed: false }
 ];
 /*
 ReactDOM.render(
@@ -17,5 +18,7 @@ ReactDOM.render(
   document.getElementById('root')
 );
 */
+
 ReactDOM.render(<App tasks={TASKS} />, document.getElementById("root"));
+
 

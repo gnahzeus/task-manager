@@ -54,7 +54,8 @@ class TasksContainer extends Component {
 		  })
 		})
 		.catch(error => console.log(error))      
-	  }
+	}
+
 
   removeTask = (id) => {
     axios.delete(`/api/version1/tasks/${id}`)
@@ -68,7 +69,7 @@ class TasksContainer extends Component {
       })
     })
     .catch(error => console.log(error))
-    }
+  }
 
   componentDidMount() {
     this.loadTasks();
