@@ -18,22 +18,18 @@ function Form(props) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2 className="label-wrapper">
-        <label htmlFor="new-todo-input" className="label__lg">
-          Add New Task
-        </label>
-      </h2>
       <input
         type="text"
         id="new-todo-input"
         className="input input__lg"
         name="text"
+        placeholder="Work: Send Emails"
         autoComplete="off"
         value={name}
         onChange={handleChange}
       />
       <button type="submit" className="btn btn__primary btn__lg">
-        Add
+        Add Task
       </button>
     </form>
   );
