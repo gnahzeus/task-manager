@@ -13,7 +13,7 @@ const FILTER = {
   Completed: task => task.completed,
   Work: task => task.name.toLowerCase().includes("work"),
   School: task => task.name.toLowerCase().includes("school") || task.name.toLowerCase().includes("homework"),
-  "Misc.": task => task.name.toLowerCase().includes("misc") || !task.name.toLowerCase().includes("work") && !task.name.toLowerCase().includes("school") 
+  "Misc.": task => task.name.toLowerCase().includes("misc") || (!task.name.toLowerCase().includes("work") && !task.name.toLowerCase().includes("school"))
 }
 
 const FILTER_TAGS = Object.keys(FILTER); // array of filter_tags
