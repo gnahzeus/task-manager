@@ -28,7 +28,7 @@ function App(props) {
 
 
   const getAllTasks = () => {
-    axios.get("/api/version1/tasks")
+    axios.get("https://limitless-cliffs-41725.herokuapp.com/")
     .then((res) => {
       console.log("RES.DATA ", res.data)
       setTasks(res.data)
