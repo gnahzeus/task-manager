@@ -37,46 +37,7 @@ function App(props) {
   }
   
   
-  /*
   function addTask(name) {
-    fetch('/api/version1/tasks', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        "task":{
-          "name": name,
-          "completed": false,
-        }
-      }),
-    })
-      .then((res) => res.json())
-      .then(data => {
-        const newTask = { id: "todo-" + nanoid(), name: name, completed: false };
-        console.log("data here", data);
-        setTasks([...tasks, newTask]); } )
-      .catch((error) => console.log('error'))
-  }
-  */
-  
-  function addTask(name) {
-    /*
-    if (!(name === "")) { //disallow empty tasks
-      const params = { id: "todo-" + nanoid(), name: name, completed: false }
-      axios.post("/api/version1/tasks", params, 
-      {headers: {'content-type': 'application/json',},})
-      .then((res) => {
-        const newTask = { id: "todo-" + nanoid(), name: name, completed: false };
-        //console.log("res.data", res);
-        //console.log("tasks", tasks);
-        console.log("res.data here", res.data);
-        setTasks([...tasks, newTask]); 
-      })
-      .catch((error) => console.log(error));
-    }
-   */
     if (!(name === "")) { //disallow empty tasks
       axios.post("/api/version1/tasks", {name: name, completed: false})
       .then((res) => {
@@ -96,20 +57,6 @@ function App(props) {
     .catch(error => console.log(error))
   }
 
-/*
-  modifyTask = (e, id) => {
-		axios.put(`/api/version1/tasks/${id}`, {task: {done: e.target.checked}})
-		.then(res => {
-		  const taskIndex = this.state.tasks.findIndex(x => x.id === res.data.id)
-		  const tasks = update(this.state.tasks, {
-			[taskIndex]: {$set: res.data}
-		  })
-		  this.setState({
-			tasks: tasks
-		  })
-		})
-		.catch(error => console.log(error))      
-	} . */
 
   function editTask(id, editedName) {
     axios.put(`/api/version1/tasks/${id}`, {name: editedName})

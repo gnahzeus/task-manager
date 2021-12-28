@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, {useState } from "react";
 
 
@@ -16,7 +15,6 @@ export default function Task(props) {
         props.editTask(props.id, editedName);
         setEditedName("");
         setEditing(false); 
-      
     }
          
 
