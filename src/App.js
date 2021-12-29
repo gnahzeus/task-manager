@@ -27,7 +27,7 @@ function App(props) {
   }, [])
 
   const getAllTasks = () => {
-    axios.get("https://limitless-cliffs-41725.herokuapp.com/api/version1/tasks")
+    axios.get("https://limitless-cliffs-41725.herokuapp.com/")
     .then((res) => {
       console.log("RES.DATA ", res.data)
       setTasks(res.data)
@@ -38,7 +38,7 @@ function App(props) {
   
   function addTask(name) {
     if (!(name === "")) { //disallow empty tasks
-      axios.post("https://limitless-cliffs-41725.herokuapp.com/api/version1/tasks", {name: name, completed: false})
+      axios.post("https://limitless-cliffs-41725.herokuapp.com/", {name: name, completed: false})
       .then((res) => {
         const newTask = { id: "todo-" + nanoid(), name: name, completed: false };
         setTasks([...tasks, newTask]); 
@@ -48,7 +48,7 @@ function App(props) {
   }
 
   function deleteTask(id) {
-    axios.delete(`/api/version1/tasks/${id}`)
+    axios.delete(`https://limitless-cliffs-41725.herokuapp.com/${id}`)
     .then(res => {
       const remaining = tasks.filter(task => id !== task.id);
       setTasks(remaining); // input new array without deleted tasks
@@ -58,7 +58,7 @@ function App(props) {
 
 
   function editTask(id, editedName) {
-    axios.put(`https://limitless-cliffs-41725.herokuapp.com/api/version1/tasks${id}`, {name: editedName})
+    axios.put(`https://limitless-cliffs-41725.herokuapp.com/${id}`, {name: editedName})
 		.then(res => {
 		  const editedTasks = tasks.map(task => {
         if (id === task.id) { // if the task has same id as edited task
@@ -73,7 +73,7 @@ function App(props) {
   }
 
   function toggleTaskCompleted(id, completion) {
-      axios.put(`/api/version1/tasks/${id}`, {completed: !completion})
+      axios.put(`https://limitless-cliffs-41725.herokuapp.com/${id}`, {completed: !completion})
       .then(res => {
         const updatedTasks = tasks.map(task => {
           // if this task has the same ID as the edited task
