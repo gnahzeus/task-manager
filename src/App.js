@@ -1,6 +1,6 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import './App.css';
-import TasksContainer from "./components/TasksContainer";
+//import TasksContainer from "./components/TasksContainer";
 import Task from "./components/Task";
 import Form from "./components/Form";
 import FilterTag from "./components/FilterTag";
@@ -30,7 +30,7 @@ function App(props) {
   const getAllTasks = () => {
     axios.get(tasksLink)
     .then((res) => {
-      console.log("RES.DATA ", res.data)
+      //console.log("RES.DATA ", res.data)
       setTasks(res.data)
     })
     .catch(error => console.error(`Error: ${error}`));
@@ -130,19 +130,5 @@ function App(props) {
     </div>
   );
 }
-/*
-class App extends Component {
-  render() {
-    return (
-      <div className="mainContainer">
-        <div className="topHeading">
-          <h1>My Task Manager</h1>
-        </div>
-        <TasksContainer />
-      </div>
-    );
-  }
-}
-*/
 
 export default App;
